@@ -27,7 +27,46 @@ galleryRef.append(...galleryMarkup);
 
 galleryRef.addEventListener("click", zoomImage);
 
-const zoomImage = (event) => { 
-    event.preventDefault();
+// function zoomImage(event) {
+//   const { target } = event;
   
-};
+//   if (target.classList.contains("gallery__image")) {
+//     event.preventDefault();
+
+//     let isModalOpen = false;
+
+//     const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">
+//       `,
+//       { onClose: () => document.removeEventListener("keyup", closeModal) }
+//     );
+
+//     isModalOpen = instance.show();
+
+//     if (isModalOpen) {
+//       document.addEventListener("keyup", closeModal);
+//     }
+
+//     function closeModal(event) {
+//       if (event.key === "Escape") {
+//         instance.close();
+//       }
+//     }
+//   }
+// }
+
+function zoomImage(event) {
+    const { target } = event;
+    if (target.classList.contains("gallery__image")) {
+        event.preventDefault();
+        basicLightbox.create(`
+		<img width="1400" height="900" src="${event.target.dataset.source}">`).show();
+        document.addEventListener("keydown", closeModal);
+        
+        function closeModal(event) {
+        if (event.key === "Escape") {
+            basicLightbox.close();
+            document.removeEventListener("keydown", closeModal)
+      }
+    }
+    }
+}
